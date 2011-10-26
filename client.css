@@ -1,0 +1,7 @@
+body {
+    background: black;
+}
+
+canvas {
+    border: double pink 5px;
+}

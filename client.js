@@ -28,4 +28,25 @@ $(document).ready(function() {
 });
 
 var g = new Game();
-g.createTestGame();
+
+
+
+var h = 800, w = 1500;
+var cont = $("<div />");
+$("body").append(cont);
+
+g.initDisplay(cont, w, h);
+
+g.createTestGameState(500, w, h);
+
+g.update();
+g.refreshDisplay();
+setInterval(function() {
+
+    g.updateTestGameState();
+
+    g.update();
+    g.refreshDisplay();
+    
+    console.log("Frame");
+}, 30);

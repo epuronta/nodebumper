@@ -84,7 +84,8 @@ io.sockets.on("connection", function(socket) {
     socket.on("pong", function(msg) {
         if(msg.timestamp) {
             var latency = (new Date()).getTime() - msg.timestamp;
-            console.log( "Latency: " + latency);
+            console.log( "Latency from " + socket.handshake.address.address + ": " + latency);
+            //console.log("Latency: " + latency);
             socket.set("latency", latency);
         }
     });
