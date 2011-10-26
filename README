@@ -1,0 +1,7 @@
+Multiplayer game implemented with Node.js server, WebSocket and client side canvas graphics.
+
+Game has X players on a playing area, controlling discs with thrusters up, down, left and right. Players
+control thruster power to push other players out of the area.
+
+This is not a serious project. It is meant mainly to test out server side JavaScript out of curiosity
+and also get some material for Bachelor's thesis.
