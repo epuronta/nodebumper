@@ -1,4 +1,5 @@
 require("./sylvester.src.js");
+require("./game.js");
 
 var http = require("http")
     ,url = require("url")
@@ -66,11 +67,12 @@ var server = http.createServer(handleHttpRequest);
 server.listen(8000);
 console.log("HTTP server running in port 8000.");
 
-
 var io = socketio.listen(server);
 io.set("log level", 1);
 io.sockets.on("connection", function(socket) {
     io.sockets.emit("announcement", { message: "User connected" });
+    
+    socket.set("latency", 0);
 
     socket.on("message", function(msg) {
         io.sockets.emit("message", msg)
@@ -80,6 +82,16 @@ io.sockets.on("connection", function(socket) {
     socket.on("disconnect", function() {
         io.sockets.emit("announcement", { message: "User disconnected" });
     });
+    
+    setInterval(function() {
+        socket.get("latency", function(err, l) {
+            socket.emit("ping", {
+                timestamp: (new Date()).getTime(),
+                latency: l
+            });
+        });
+        
+    }, 1000);
 
     socket.on("pong", function(msg) {
         if(msg.timestamp) {
@@ -90,11 +102,13 @@ io.sockets.on("connection", function(socket) {
         }
     });
     
+    socket.on("playerstate", function(state) {
+        
+    });
+    
 });
 
-setInterval(function() {
-    io.sockets.emit("ping", { timestamp: (new Date()).getTime() });
-}, 1000);
+
 
 
 
